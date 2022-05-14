@@ -61,25 +61,27 @@ public class LoginServlet extends HttpServlet {
                 }
 
                 HttpSession session = request.getSession();
+                System.out.println("session id "+session.getId());
                 session.setMaxInactiveInterval(60*60);
                 session.setAttribute("user", user);
 
 
-                request.getRequestDispatcher("userInfo.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/views/userInfo.jsp").forward(request, response);
 
             }else {
+
                 request.setAttribute("message","Username or Password Error");
-                request.getRequestDispatcher("login.jsp").forward(request,response);
+                request.getRequestDispatcher("WEB-INF/views/login.jsp").forward(request,response);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        request.getRequestDispatcher("login.jsp").forward(request,response);
+        request.getRequestDispatcher("WEB-INF/views/login.jsp").forward(request,response);
     }
 
     @Override
