@@ -3,14 +3,10 @@
   User: zjy
   Date: 2022/5/11
   Time: 21:00
-  To change this template use File | Settings | File Templates.
+  To change this template use File | Settings | File Templates.userdb@localhost
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>register</title>
-</head>
-<body>
+<%@include file="header.jsp"%>
 
 <form method="Post" action="register">
     username<input type="text" name="username"/><br/>
@@ -20,5 +16,4 @@
     Date of Birth :<input type="text" name="birthdate"/><br/>
     <input type="submit" value="Register"/>
 </form>
-</body>
-</html>
+<%@include file="footer.jsp"%>
