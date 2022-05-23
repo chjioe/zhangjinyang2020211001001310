@@ -2,42 +2,37 @@ package com.zhangjinyang.controller;
 
 import com.zhangjinyang.userdao.UserDao;
 import com.zhangjinyang.model.User;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
-@WebServlet(name = "UpdateUserServlet", value = "/updateUser")
+@WebServlet(name = "UpdateUserServlet",value = "/updateUser")
 public class UpdateUserServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("WEB-INF/views/updateUser.jsp").forward(request, response);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
+
+        String ID = request.getParameter("ID");
         String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
+        String passwords = request.getParameter("passwords");
+        String emails = request.getParameter("emails");
         String gender = request.getParameter("gender");
-        String birthday = request.getParameter("birthday");
+        String birthdate = request.getParameter("birthdate");
 
         User user = new User();
-        user.setId(Integer.valueOf(id));
+        user.setID(ID);
         user.setUsername(username);
-        user.setPassword(password);
-        user.setEmail(email);
+        user.setPasswords(passwords);
+        user.setEmails(emails);
         user.setGender(gender);
-        // 这里的Date.valueOf()是java.sql.Date类的方法，而User中的Date类是java.util.Date
-        // java.sql.Date类是继承java.util.Date类的，等于这里使用了向上转型
-        user.setBirthDate(Date.valueOf(birthday));
+        user.setBirthdate(Date.valueOf(birthdate));
 
         UserDao userDao = new UserDao();
         ServletContext application = getServletContext();
@@ -57,5 +52,9 @@ public class UpdateUserServlet extends HttpServlet {
             request.setAttribute("message", "Update fail!");
             request.getRequestDispatcher("WEB-INF/views/updateUser.jsp").forward(request, response);
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("WEB-INF/views/updateUser.jsp").forward(request,response);
     }
 }

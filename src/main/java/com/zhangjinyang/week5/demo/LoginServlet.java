@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
                 String rememberMe = request.getParameter("rememberMe");
                 if(rememberMe!= null && rememberMe.equals("1")){
                     Cookie usernameCookie = new Cookie("cUsername",user.getUsername());
-                    Cookie passwordCookie = new Cookie("cPassword",user.getPassword());
+                    Cookie passwordCookie = new Cookie("cPassword",user.getPasswords());
                     Cookie rememberMeCookie = new Cookie("cRememberMe",rememberMe);
                     usernameCookie.setMaxAge(60*60*24*10);
                     passwordCookie.setMaxAge(60*60*24*10);
@@ -82,6 +82,7 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.getRequestDispatcher("WEB-INF/views/login.jsp").forward(request,response);
+        doPost(request,response);
     }
 
     @Override

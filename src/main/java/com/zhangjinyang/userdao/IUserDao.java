@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-//have all jdbc methods you need -select -update -delete -insert
 public interface IUserDao {
     public boolean saveUser(Connection con, User user) throws SQLException;
     public int deleteUser(Connection con, User user) throws SQLException;

@@ -1,7 +1,5 @@
 package com.zhangjinyang.week3.demo;
 
-import com.zhangjinyang.model.User;
-import com.zhangjinyang.userdao.UserDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,46 +7,75 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+
 
 @WebServlet(name = "RegisterServlet")
 public class RegisterServlet extends HttpServlet {
+
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+
+    @Override
+    public void init() throws ServletException {
+        conn= (Connection) getServletContext().getAttribute("conn");//name of attibute
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        User user = new User();
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String Email = request.getParameter("email");
-        String Gender = request.getParameter("gender");
-        String birthDate = request.getParameter("birthdate");
+        String ID=request.getParameter("ID");
+        String username=request.getParameter("username");
+        String passwords=request.getParameter("passwords");
+        String emails=request.getParameter("emails");
+        String gender=request.getParameter("gender");
+        String birthdate=request.getParameter("birthdate");
 
-        user.setId(1);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setEmail(Email);
-        user.setGender(Gender);
-        Connection conn = (Connection) getServletContext().getAttribute("con");;
-        UserDao userDao = new UserDao();
         try {
-            userDao.saveUser(conn,user);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+            String sql = "insert into Registers(ID, username, passwords, emails, gender, birthdate) values(?,?,?,?,?,?)";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1,"23");
+            ps.setString(2, username);
+            ps.setString(3, passwords);
+            ps.setString(4, emails);
+            ps.setString(5, gender);
+            ps.setString(6, birthdate);
+            ps.executeUpdate();
 
-        PrintWriter writer = response.getWriter();
-        writer.println("<br>username:"+username);
-        writer.println("<br>password:"+password);
-        writer.println("<br>Email:"+Email);
-        writer.println("<br>Gender:"+Gender);
-        writer.println("<br>birthDate:"+birthDate);
-        writer.close();
+            response.sendRedirect("login.jsp");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (rs!=null){
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps!=null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn!=null){
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        request.getRequestDispatcher("WEB-INF/views/register.jsp").forward(request,response);
+        request.getRequestDispatcher("WEB-INF/views/registerwww.jsp").forward(request, response);
     }
 }
