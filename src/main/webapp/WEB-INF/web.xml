@@ -76,6 +76,15 @@
         <welcome-file>home</welcome-file>
     </welcome-file-list>
 
+    <filter>
+        <filter-name>ZhangJinYang</filter-name>
+        <filter-class>com.zhangjinyang.Lab2.ZhangJinYangFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ZhangJinYang</filter-name>
+        <url-pattern>/Lab2/welcome.jsp</url-pattern>
+    </filter-mapping>
+
 <!--    <servlet-mapping>-->
 <!--        <servlet-name>JDBCDemoServlet</servlet-name>-->
 <!--        <url-pattern>/jdbc</url-pattern>-->
