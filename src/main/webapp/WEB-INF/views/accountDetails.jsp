@@ -76,7 +76,7 @@
                                         <%
                                             Order o=(Order)pageContext.findAttribute("o");
                                             int n=o.getPaymentId();
-                                            java.sql.Connection con=(java.sql.Connection)application.getAttribute("con");
+                                            java.sql.Connection con=(java.sql.Connection)application.getAttribute("conn");
                                             String paymentType= Payment.findByPaymentId(con,n);
                                         %>
                                         <p class="cart_total_price"><%=paymentType %></p>
@@ -99,10 +99,11 @@
                     </td></tr>
                     </tbody>
                 </table>
+
+
             </div>
         </div>
     </div>
-
 </section> <!--/#cart_items-->
 
 <div id="popup_box">    <!-- OUR PopupBox DIV-->
